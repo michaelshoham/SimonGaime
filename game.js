@@ -35,7 +35,7 @@ function animatePress(element) {
 
 function wrong() { 
     playSound(playUrlObject.wrong);
-    $("h1").html("You missed, try again");
+    $("h1").html(`הגעת לשלב ${level} כל הכבוד !!!`);
     $("body").addClass("game-over"); 
     setTimeout(function () {
         location.reload();
@@ -62,7 +62,7 @@ function nextSequence() {
 
     gamePattern.push(randomChosenColour);
     level++;
-    $("h1").html(`Level ${level}`); 
+    $("h1").html(`שלב ${level}`); 
 }
 
 $(document).on("keydown", function () {
