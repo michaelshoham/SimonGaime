@@ -9,11 +9,11 @@ var playUrlObject = {
 var gamePattern = [];
 var userClickedPattern = [];
 var level = 0;
-var index = 0; 
+var index = 0;
 
 function setRandom(num) {
     var random = Math.random();
-    var finelNumber = Math.floor(random * (num + 1)); 
+    var finelNumber = Math.floor(random * (num + 1));
     return finelNumber;
 }
 
@@ -33,10 +33,10 @@ function animatePress(element) {
     }, 100);
 }
 
-function wrong() { 
+function wrong() {
     playSound(playUrlObject.wrong);
     $("h1").html(`הגעת לשלב ${level} כל הכבוד !!!`);
-    $("body").addClass("game-over"); 
+    $("body").addClass("game-over");
     setTimeout(function () {
         location.reload();
     }, 3000);
@@ -61,21 +61,36 @@ function nextSequence() {
     flashBtn(idBtn);
 
     gamePattern.push(randomChosenColour);
+    $("h1").html(`שלב ${level}`);
     level++;
-    $("h1").html(`שלב ${level}`); 
 }
 
-$(document).on("keydown", function () {
+$("#playGame").on("click", function () {
+    animatePress(this)
+    gamePattern = [];
+    userClickedPattern = [];
+    level = 0;
+    index = 0;
     $("h1").html("Level 0");
     nextSequence();
 });
+
+
+$(document).on("keydown", function () {
+    if(level <= 0){
+        $("h1").html("Level 0");
+        nextSequence();  
+    }
+   
+});
+
 
 $(".btn").on("click", function () {
     var userChosenColour = $(this).attr("id");
     playSound(`sounds/${userChosenColour}.mp3`);
     userClickedPattern.push(userChosenColour);
     animatePress(this);
-    
+
     if (gamePattern.length > 0) {
         if (!checkAnswer(index)) {
             wrong();
